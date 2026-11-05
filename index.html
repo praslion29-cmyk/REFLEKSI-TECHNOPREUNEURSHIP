@@ -44,8 +44,8 @@ main{max-width:1000px;margin:0 auto;padding:48px 20px 40px}
 .theme{color:var(--accent);font-weight:600;margin:0 0 18px}
 .panel ul{margin:0 0 22px;padding-left:20px}
 .panel li{margin-bottom:8px}
-blockquote{clear:both;margin:0 0 24px;padding:4px 0 4px 18px;border-left:4px solid var(--sky);font-size:20px;line-height:1.45;font-style:italic}
-.nav{clear:both;display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:16px}
+blockquote{margin:0 0 24px;padding:4px 0 4px 18px;border-left:4px solid var(--sky);font-size:20px;line-height:1.45;font-style:italic}
+.nav{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:16px}
 .nav button{background:none;border:1px solid var(--line);color:var(--ink);font:500 15px "Barlow",Arial,sans-serif;padding:9px 16px;border-radius:999px;cursor:pointer;min-height:44px}
 .nav button:disabled{opacity:.4;cursor:default}
 .nav button:not(:disabled):hover{border-color:var(--accent)}
@@ -63,20 +63,18 @@ footer{max-width:1000px;margin:0 auto;padding:0 20px 48px;color:var(--muted);fon
 .stop::before{display:none}
 .stop[aria-selected="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
 .panel{padding:22px 18px;min-height:0}
-.fig{float:none;width:100%;margin:0 0 18px}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.plane{transition:none}}
 .brand{display:flex;align-items:center;gap:16px;margin-bottom:40px}
 .brand img{width:76px;height:76px;border-radius:50%;background:#fff;flex:none}
 .brand strong{display:block;font:700 clamp(17px,3vw,22px)/1.2 "Barlow Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.3px;max-width:36ch}
 .brand span{font-size:14px;color:#CFE0F7}
-.fig{float:right;width:44%;margin:4px 0 16px 24px;border-radius:10px;background:var(--bg);padding:8px}
+.fig{margin:0 0 22px;border-radius:10px;background:var(--bg);padding:14px;text-align:center}
 .fig svg{width:100%;max-width:420px;height:auto;max-height:150px}
 .fig .a{stroke:var(--accent);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .fig .f{fill:var(--accent)}.fig .l{fill:var(--line)}
 .refl{margin:0 0 22px;color:var(--ink)}
-.fig img{display:block;width:100%;height:auto;border-radius:6px;cursor:zoom-in}
-
+.fig img{display:block;margin:0 auto;max-width:100%;max-height:340px;width:auto;height:auto;border-radius:8px}
 .hero .in{display:grid;grid-template-columns:1fr auto;column-gap:48px;align-items:start}
 .hero .in>*{grid-column:1}
 .hero .in>.btn{justify-self:start}
@@ -144,7 +142,7 @@ function go(i){
  panel.innerHTML=`<figure class="fig" role="img"></figure><h3></h3><p class="theme"></p><ul></ul><p class="refl"></p><blockquote></blockquote><div class="nav"><button id="pv">Sebelumnya</button><button id="nx">Berikutnya</button></div>`;
  panel.querySelector("h3").textContent=m.t;panel.querySelector(".theme").textContent=m.th;
  panel.querySelector("ul").innerHTML=m.p.map(x=>`<li>${x}</li>`).join("");
- panel.querySelector("blockquote").textContent="“"+m.q+"”";panel.querySelector(".refl").textContent=R[i];const fg=panel.querySelector(".fig");fg.removeAttribute("role");fg.innerHTML=`<img alt="${ALT[i]}" title="Klik untuk memperbesar" src="${IMG[i]}">`;
+ panel.querySelector("blockquote").textContent="“"+m.q+"”";panel.querySelector(".refl").textContent=R[i];const fg=panel.querySelector(".fig");fg.removeAttribute("role");fg.innerHTML=`<img alt="${ALT[i]}" src="${IMG[i]}">`;
  const pv=panel.querySelector("#pv"),nx=panel.querySelector("#nx");
  pv.disabled=i===0;nx.textContent="Berikutnya";nx.disabled=i===M.length-1;
  pv.onclick=()=>go(i-1);nx.onclick=()=>go(i+1);
@@ -152,7 +150,6 @@ function go(i){
  const s=path.querySelectorAll(".stop")[i];plane.style.transform=`translateY(${s.offsetTop+s.offsetHeight/2-17}px) rotate(180deg)`;
 }
 document.addEventListener("keydown",e=>{if(e.target.tagName==="INPUT")return;if(e.key==="ArrowRight"&&cur<M.length-1)go(cur+1);if(e.key==="ArrowLeft"&&cur>0)go(cur-1)});
-panel.addEventListener("click",e=>{const im=e.target.closest(".fig img");if(!im)return;const o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:50;background:rgba(5,12,26,.88);display:flex;align-items:center;justify-content:center;padding:20px;cursor:zoom-out";o.innerHTML=`<img src="${im.src}" alt="${im.alt}" style="max-width:100%;max-height:100%;border-radius:8px">`;const k=ev=>{if(ev.key==="Escape")c()};const c=()=>{o.remove();document.removeEventListener("keydown",k)};o.onclick=c;document.addEventListener("keydown",k);document.body.appendChild(o)});
 go(0);
 </script>
 </body>
