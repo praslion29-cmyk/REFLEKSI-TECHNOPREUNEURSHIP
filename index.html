@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Tugas 7 – Refleksi Technopreneurship</title>
+<meta name="description" content="Versi interaktif refleksi Tugas 7 Technopreneurship: tujuh materi dan satu benang merah, oleh Yohanes Agung Prasetya Putra, S.T.">
+<meta name="theme-color" content="#0B2A5B">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tugas 7 – Refleksi Technopreneurship">
+<meta property="og:description" content="Tujuh materi Technopreneurship, satu benang merah. Refleksi interaktif.">
+<meta property="og:locale" content="id_ID">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
@@ -181,6 +187,12 @@ footer{max-width:1000px;margin:0 auto;padding:0 20px 48px;color:var(--muted);fon
 </div>
 <a class="btn" href="#jelajah">Mulai membaca refleksi</a>
 </div></header>
+<section class="statband" aria-label="Ringkasan"><ul>
+<li><b data-count="7">7</b><span>Materi dipelajari</span></li>
+<li><b data-count="9" data-key="stops">9</b><span>Pemberhentian belajar</span></li>
+<li><b data-count="1">1</b><span>Benang merah</span></li>
+<li><b data-count="1400" data-key="words" data-suffix="+">1400+</b><span>Kata dalam narasi lengkap</span></li>
+</ul></section>
 <main>
 <section id="jelajah">
 <div class="intro">
@@ -269,5 +281,115 @@ b.addEventListener("click",()=>{
 startMusic().catch(()=>{EV.forEach(e=>document.addEventListener(e,firstGesture,true))});
 })();
 </script>
+<!-- ===== Enhancements: stat band, scroll reveal, path timeline, progress bar, back-to-top ===== -->
+<style>
+/* Stat band */
+.statband{position:relative;z-index:2;max-width:1000px;margin:-30px auto 0;padding:0 20px}
+.statband ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.statband li{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:0 10px 28px rgba(11,42,91,.16);text-align:center;margin:0}
+.statband b{display:block;font:700 clamp(32px,5vw,44px)/1 "Barlow Condensed",Arial,sans-serif;color:var(--accent);font-variant-numeric:tabular-nums}
+.statband span{display:block;margin-top:6px;font-size:14px;line-height:1.3;color:var(--muted)}
+@media(max-width:760px){.statband{margin-top:-10px;padding:0 16px}.statband ul{grid-template-columns:1fr 1fr;gap:10px}.statband li{padding:12px 10px}}
+
+/* Scroll reveal (active only when JS adds .rv-on) */
+.rv-on .rv{opacity:0;transform:translateY(22px);transition:opacity 1.4s ease,transform 1.4s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.rv-on .rv.in-view{opacity:1;transform:none}
+
+/* Learning path as timeline */
+.path::before{border-left:0;left:9px;width:4px;border-radius:2px;background:var(--line)}
+.path::after{content:"";position:absolute;left:9px;top:18px;width:4px;border-radius:2px;height:var(--pp,0px);background:linear-gradient(var(--sky),var(--accent));transition:height 1.3s cubic-bezier(.3,.7,.2,1)}
+.plane{left:0}
+.stop::before{z-index:1;box-shadow:0 0 0 4px var(--bg);transition:background .3s,border-color .3s,color .3s,transform .3s}
+.stop:hover::before{transform:scale(1.12);border-color:var(--accent)}
+.stop.done::before{content:"✓";background:var(--card);font-weight:700}
+.stop[aria-selected="true"]::before{animation:pthPulse 3s ease-out infinite}
+@keyframes pthPulse{0%{box-shadow:0 0 0 4px var(--bg),0 0 0 4px rgba(31,111,235,.5)}100%{box-shadow:0 0 0 4px var(--bg),0 0 0 14px rgba(31,111,235,0)}}
+.stop{transition:background .2s,color .2s}
+@media(max-width:760px){.path::after{display:none}.stop.done::before{content:none}.stop.done{border-color:var(--accent);color:var(--accent)}}
+
+/* Progress bar + back to top */
+#rp{position:fixed;left:0;top:0;height:4px;width:100%;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,var(--sky),var(--accent));z-index:10001;pointer-events:none}
+#toTop{all:unset;box-sizing:border-box;position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:49;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;cursor:pointer;background:var(--card);color:var(--accent);border:1px solid var(--line);box-shadow:0 6px 18px rgba(11,42,91,.22);opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .25s,transform .25s,visibility .25s,background .2s,color .2s}
+#toTop.show{opacity:1;visibility:visible;transform:none}
+#toTop:hover{background:var(--accent);color:#fff}
+#toTop:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+#toTop svg{width:22px;height:22px;fill:currentColor}
+@media print{#rp,#toTop,.statband{display:none!important}.rv-on .rv{opacity:1!important;transform:none!important}}
+@media(prefers-reduced-motion:reduce){.rv-on .rv{opacity:1;transform:none;transition:none}.stop[aria-selected="true"]::before{animation:none}.path::after{transition:none}}
+</style>
+<div id="rp" aria-hidden="true"></div>
+<button id="toTop" type="button" aria-label="Kembali ke atas" title="Kembali ke atas"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5.5 4.5 13l1.4 1.4L11 9.3V20h2V9.3l5.1 5.1 1.4-1.4z"/></svg></button>
+<script>
+(function(){
+ var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches;
+ var $=function(s,r){return(r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+ var hasIO="IntersectionObserver" in window&&!reduce;
+
+ /* --- Stat band values from real content --- */
+ var words=typeof FULL!=="undefined"?FULL.join(" ").split(/\s+/).filter(Boolean).length:0;
+ var vals={stops:typeof M!=="undefined"?M.length:9,words:Math.floor(words/100)*100};
+ $$("[data-count]").forEach(function(b){
+  var k=b.getAttribute("data-key");if(k&&vals[k])b.setAttribute("data-count",vals[k]);
+  b.textContent=b.getAttribute("data-count")+(b.getAttribute("data-suffix")||"");
+ });
+ function countUp(b){
+  var to=+b.getAttribute("data-count"),suf=b.getAttribute("data-suffix")||"",t0=null,dur=3200;
+  function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);b.textContent=Math.round(to*e)+suf;if(p<1)requestAnimationFrame(step)}
+  requestAnimationFrame(step);
+ }
+ if(hasIO){
+  var io2=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){countUp(e.target);io2.unobserve(e.target)}})},{threshold:.6});
+  $$("[data-count]").forEach(function(b){b.textContent="0"+(b.getAttribute("data-suffix")||"");io2.observe(b)});
+ }
+
+ /* --- Scroll reveal --- */
+ var io;
+ function reveal(list){
+  if(!hasIO)return;
+  var lastParent=null,n=0;
+  list.forEach(function(e){
+   if(e.classList.contains("rv"))return;
+   var par=e.parentNode;if(par!==lastParent){lastParent=par;n=0}
+   e.classList.add("rv");e.style.setProperty("--d",Math.min(n++,6)*.18+"s");io.observe(e);
+  });
+ }
+ if(hasIO){
+  document.documentElement.classList.add("rv-on");
+  io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in-view");io.unobserve(e.target)}})},{threshold:.12,rootMargin:"0px 0px -6% 0px"});
+  reveal($$(".statband li,.intro,.layout,footer"));
+  var panel=$("#panel");
+  function panelItems(){reveal($$("#panel>*:not(.nav),#panel li,#panel .full"))}
+  if(panel){
+   // Panel konten diganti setiap pindah materi: pasang animasi lagi pada isi baru
+   new MutationObserver(panelItems).observe(panel,{childList:true});
+   panelItems();
+  }
+ }
+
+ /* --- Path timeline: fill progress down to the active stop --- */
+ var path=$("#path");
+ function pathProgress(){
+  if(!path)return;
+  var s=$('.stop[aria-selected="true"]',path);if(!s)return;
+  path.style.setProperty("--pp",Math.max(0,s.offsetTop+s.offsetHeight/2-18)+"px");
+ }
+ if(path){
+  new MutationObserver(pathProgress).observe(path,{attributes:true,subtree:true,attributeFilter:["aria-selected"]});
+  window.addEventListener("resize",pathProgress);pathProgress();
+ }
+
+ /* --- Progress bar + back to top --- */
+ var rp=$("#rp"),tt=$("#toTop"),tick=false;
+ function upd(){
+  var h=document.documentElement,max=h.scrollHeight-h.clientHeight,y=window.pageYOffset||h.scrollTop;
+  rp.style.transform="scaleX("+(max>0?Math.min(1,y/max):0)+")";
+  tt.classList.toggle("show",y>500);tick=false;
+ }
+ window.addEventListener("scroll",function(){if(!tick){tick=true;requestAnimationFrame(upd)}},{passive:true});
+ window.addEventListener("resize",upd);upd();
+ tt.addEventListener("click",function(){window.scrollTo({top:0,behavior:reduce?"auto":"smooth"})});
+})();
+</script>
+<!-- ===== end enhancements ===== -->
 </body>
 </html>
